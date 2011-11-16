@@ -8,6 +8,8 @@ module Authem::Model
 
     attr_accessor :password, :password_confirmation
 
+    attr_protected :crypted_password, :salt
+
     validates_confirmation_of :password
     validate :email, :presence => true, :uniqueness => true
 
