@@ -16,11 +16,15 @@ Gem::Specification.new do |s|
 
   s.files = Dir.glob("{lib,spec}/**/*") + %w(README.markdown)
 
-
-  s.add_dependency('bcrypt-ruby')
   s.add_dependency('activesupport')
+  s.add_dependency('bcrypt-ruby')
 
-  s.add_development_dependency("rspec")
+  s.add_development_dependency('actionpack')
+  s.add_development_dependency('activerecord')
+  s.add_development_dependency('database_cleaner')
+  s.add_development_dependency("rake")
+  s.add_development_dependency('rspec')
+  s.add_development_dependency('pg')
 
   s.files = Dir.glob("lib/**/*") + %w(LICENSE README.markdown Rakefile)
   s.require_path = 'lib'
