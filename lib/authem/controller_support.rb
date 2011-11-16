@@ -9,6 +9,7 @@ module Authem::ControllerSupport
     if email_or_user.is_a? Authem::Model
       establish_presence(email_or_user)
       remember_me! if remember_me
+      email_or_user
     end
   end
 
