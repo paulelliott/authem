@@ -61,6 +61,14 @@ describe Authem::ControllerSupport do
       it { should == user }
     end
 
+    context 'without a remember me token' do
+      before { cookies[:remember_me] = "" }
+      it 'should not search for user by token' do
+        user.class.should_not_receive(:find_by_remember_me_token)
+        subject
+      end
+    end
+
     context 'with a remember me token' do
       before { cookies[:remember_me] = user.remember_me_token }
       it { should == user }
