@@ -1,4 +1,5 @@
 module Authem::ControllerSupport
+  extend ActiveSupport::Concern
 
   protected
 
@@ -54,6 +55,10 @@ module Authem::ControllerSupport
     return_to_url = session[:return_to_url]
     reset_session
     session[:return_to_url] = return_to_url
+  end
+
+  included do
+    helper_method :current_user
   end
 
 end
