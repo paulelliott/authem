@@ -72,6 +72,12 @@ describe Authem::Model do
       let(:password) { 'crap' }
       it { should be_false }
     end
+
+    context 'without a crypted password' do
+      before { user.crypted_password = nil }
+      let(:password) { 'password' }
+      it { should be_false }
+    end
   end
 
   describe '#remember_me_token' do

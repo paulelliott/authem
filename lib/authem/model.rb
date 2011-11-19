@@ -34,7 +34,7 @@ module Authem::Model
   end
 
   def crypted_password_matches?(password)
-    ::BCrypt::Password.new(crypted_password) == [password, salt].join
+    crypted_password.present? && ::BCrypt::Password.new(crypted_password) == [password, salt].join
   end
 
   def encrypt_password
