@@ -41,7 +41,9 @@ module Authem::ControllerSupport
   end
 
   def establish_presence(user)
+    return_to_url = session[:return_to_url]
     clear_session
+    session[:return_to_url] = return_to_url
     session[:user_id] = user.id
     @current_user = user
   end
@@ -52,9 +54,7 @@ module Authem::ControllerSupport
 
   def clear_session
     cookies[:remember_me] = nil
-    return_to_url = session[:return_to_url]
     reset_session
-    session[:return_to_url] = return_to_url
   end
 
   included do
