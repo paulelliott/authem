@@ -14,7 +14,7 @@ module Authem::Model
     validate :email, :presence => true, :uniqueness => true
 
     def self.find_by_email(email)
-      where("upper(email) = '#{email.upcase}'").first
+      where("upper(email) = ?", email.upcase).first
     end
 
     def self.find_by_remember_me_token(remember_me_token)
