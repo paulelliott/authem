@@ -96,4 +96,16 @@ describe Authem::ControllerSupport do
       end
     end
   end
+
+  describe '#redirect_back_or_to' do
+    context 'with a return_to_url' do
+      before { session[:return_to_url] = :dashboard }
+
+      it 'clears and redirects to the return to url' do
+        controller.should_receive(:redirect_to).with(:dashboard, :flash => {})
+        controller.send :redirect_back_or_to, :somewhere
+        session[:return_to_url].should be_nil
+      end
+    end
+  end
 end

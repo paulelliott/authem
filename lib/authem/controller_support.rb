@@ -49,7 +49,9 @@ module Authem::ControllerSupport
   end
 
   def redirect_back_or_to(url, flash_hash = {})
-    redirect_to(session[:return_to_url] || url, :flash => flash_hash)
+    url = session[:return_to_url] || url
+    session[:return_to_url] = nil
+    redirect_to(url, :flash => flash_hash)
   end
 
   def clear_session
