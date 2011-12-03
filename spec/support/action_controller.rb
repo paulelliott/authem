@@ -7,3 +7,8 @@ class AuthenticatedController < ActionController::Base
     session.clear
   end
 end
+
+class MockCookies < Hash
+  def permanent; self end
+  def signed; self end
+end

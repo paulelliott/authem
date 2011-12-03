@@ -19,7 +19,7 @@ module Authem::ControllerSupport
   end
 
   def remember_me!
-    cookies[:remember_me] = current_user.remember_me_token
+    cookies.permanent.signed[:remember_me] = current_user.remember_me_token
   end
 
   def current_user

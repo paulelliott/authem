@@ -5,7 +5,7 @@ describe Authem::ControllerSupport do
 
   let!(:user) { ActiveRecordUser.create(:email => 'some@guy.com', :password => 'password') }
   let(:controller) { AuthenticatedController.new }
-  let(:cookies) { {}.with_indifferent_access }
+  let(:cookies) { MockCookies.new }
   let(:session) { {}.with_indifferent_access }
   let(:request) { mock(:request) }
 
