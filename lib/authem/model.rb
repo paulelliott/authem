@@ -17,10 +17,6 @@ module Authem::Model
       where("upper(email) = ?", email.upcase).first
     end
 
-    def self.find_by_reset_password_token(reset_password_token)
-      where(:reset_password_token => reset_password_token).first
-    end
-
     before_save :encrypt_password
 
     def self.authenticate(email, password)
