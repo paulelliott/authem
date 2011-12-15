@@ -80,22 +80,6 @@ describe Authem::Model do
     end
   end
 
-  describe '#remember_me_token' do
-    subject { user.remember_me_token }
-
-    it 'is not generated until requested' do
-      user[:remember_me_token].should be_nil
-    end
-
-    it 'generates a token when requested' do
-      subject.length.should == 40
-    end
-
-    it 'does not regenerate when requested again' do
-      subject.should == user.remember_me_token
-    end
-  end
-
   describe '#reset_password_token' do
     subject { user.reset_password_token }
 

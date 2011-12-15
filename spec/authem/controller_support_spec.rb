@@ -37,8 +37,7 @@ describe Authem::ControllerSupport do
     context 'remember me' do
       subject { cookies[:remember_me] }
       before { controller.send(:sign_in, 'some@guy.com', 'password', true) }
-      it { should == user.reload.remember_me_token }
-      it { should_not be_nil }
+      it { should == user.id }
     end
   end
 
@@ -63,14 +62,11 @@ describe Authem::ControllerSupport do
 
     context 'without a remember me token' do
       before { cookies[:remember_me] = "" }
-      it 'should not search for user by token' do
-        user.class.should_not_receive(:find_by_remember_me_token)
-        subject
-      end
+      it { should be_nil }
     end
 
     context 'with a remember me token' do
-      before { cookies[:remember_me] = user.remember_me_token }
+      before { cookies[:remember_me] = user.id }
       it { should == user }
       it 'sets the session user id' do
         subject

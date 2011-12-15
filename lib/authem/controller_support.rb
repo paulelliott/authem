@@ -19,7 +19,7 @@ module Authem::ControllerSupport
   end
 
   def remember_me!
-    cookies.permanent.signed[:remember_me] = current_user.remember_me_token
+    cookies.permanent.signed[:remember_me] = current_user.id
   end
 
   def current_user
@@ -27,7 +27,7 @@ module Authem::ControllerSupport
       if session[:user_id]
         Authem::Config.user_class.find(session[:user_id])
       elsif cookies[:remember_me].present?
-        user = Authem::Config.user_class.find_by_remember_me_token(cookies[:remember_me])
+        user = Authem::Config.user_class.find(cookies[:remember_me])
         establish_presence(user) if user
       end
     )
