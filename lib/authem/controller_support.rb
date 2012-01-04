@@ -27,7 +27,7 @@ module Authem::ControllerSupport
       if session[:user_id]
         Authem::Config.user_class.find(session[:user_id])
       elsif cookies[:remember_me].present?
-        user = Authem::Config.user_class.find(cookies[:remember_me])
+        user = Authem::Config.user_class.find(cookies.signed[:remember_me])
         establish_presence(user) if user
       end
     )
