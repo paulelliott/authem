@@ -11,7 +11,7 @@ module Authem::Model
     attr_protected :crypted_password, :salt, :reset_password_token
 
     validates_confirmation_of :password
-    validate :email, :presence => true, :uniqueness => true
+    validates :email, :presence => true, :uniqueness => true
 
     def self.find_by_email(email)
       where("upper(email) = ?", email.upcase).first

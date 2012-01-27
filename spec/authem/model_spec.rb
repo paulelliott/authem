@@ -3,6 +3,20 @@ require 'spec_helper'
 describe Authem::Model do
   let!(:user) { ActiveRecordUser.create(:email => 'someone@example.com', :password => 'password') }
 
+  describe 'validations' do
+    subject { invalid_user }
+
+    context 'when email is not present' do
+      let(:invalid_user) { ActiveRecordUser.create(:email => nil) }
+      it { should_not be_valid }
+    end
+
+    context 'when email has already been taken' do
+      let(:invalid_user) { ActiveRecordUser.create(:email => 'someone@example.com', :password => 'password') }
+      it { should_not be_valid }
+    end
+  end
+
   describe '.authenticate' do
     subject { ActiveRecordUser.authenticate(email, password) }
 
@@ -48,7 +62,7 @@ describe Authem::Model do
     subject { user }
 
     it 'calls before save' do
-      user = ActiveRecordUser.new
+      user = ActiveRecordUser.new(:email => 'something@example.com')
       user.should_receive(:encrypt_password)
       user.save
     end
