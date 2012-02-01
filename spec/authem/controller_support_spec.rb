@@ -73,6 +73,11 @@ describe Authem::ControllerSupport do
         session[:user_id].should == user.id
       end
     end
+
+    context 'with an invalid remember me token' do
+      before { cookies[:remember_me] = 945 }
+      it { should be_nil }
+    end
   end
 
   describe '#require_user' do
