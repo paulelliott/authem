@@ -4,10 +4,10 @@ module Authem::ControllerSupport
   protected
 
   def sign_in(email_or_user, password=nil, remember_me=false)
-    if email_or_user.is_a? String
+    unless email_or_user.is_a? Authem::Model
       email_or_user = Authem::Config.user_class.authenticate(email_or_user, password)
     end
-    if email_or_user.is_a? Authem::Model
+    if email_or_user
       establish_presence(email_or_user)
       remember_me! if remember_me
       email_or_user
