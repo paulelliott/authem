@@ -3,7 +3,7 @@ module Authem::ControllerSupport
 
   protected
 
-  def sign_in(email_or_user, password=nil, remember_me=nil)
+  def sign_in(email_or_user, password=nil, remember_me=false)
     if email_or_user.is_a? String
       email_or_user = Authem::Config.user_class.authenticate(email_or_user, password)
     end
