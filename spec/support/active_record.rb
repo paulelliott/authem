@@ -8,8 +8,6 @@ dbconfig = {
 }
 
 ActiveRecord::Migration.verbose = false
-
-#(Re)create database
 ActiveRecord::Base.establish_connection(dbconfig.merge('database' => 'postgres', 'schema_search_path' => 'public'))
 ActiveRecord::Base.connection.drop_database dbconfig[:database] rescue nil
 ActiveRecord::Base.connection.create_database(dbconfig[:database])
