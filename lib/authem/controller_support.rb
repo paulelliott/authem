@@ -19,15 +19,15 @@ module Authem::ControllerSupport
   end
 
   def remember_me!
-    cookies.permanent.signed[:remember_me] = current_user.id
+    cookies.permanent.signed[:remember_me] = current_user.authem_token
   end
 
   def current_user
     @current_user ||= (
-      if session[:user_id]
-        Authem::Config.user_class.where(id: session[:user_id]).first
+      if session[:authem_token]
+        Authem::Config.user_class.where(authem_token: session[:authem_token]).first
       elsif cookies[:remember_me].present?
-        user = Authem::Config.user_class.where(id: cookies.signed[:remember_me]).first
+        user = Authem::Config.user_class.where(authem_token: cookies.signed[:remember_me].to_s).first
         establish_presence(user) if user
       end
     )
@@ -41,10 +41,11 @@ module Authem::ControllerSupport
   end
 
   def establish_presence(user)
+    user.authem_token!
     return_to_url = session[:return_to_url]
     clear_session
     session[:return_to_url] = return_to_url
-    session[:user_id] = user.id
+    session[:authem_token] = user.authem_token
     @current_user = user
   end
 

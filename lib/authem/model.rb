@@ -8,7 +8,7 @@ module Authem::Model
 
     attr_accessor :password, :password_confirmation
 
-    attr_protected :crypted_password, :salt, :reset_password_token
+    attr_protected :crypted_password, :salt, :reset_password_token, :authem_token
 
     validates_confirmation_of :password
     validates :email, :presence => true, :uniqueness => true
@@ -23,6 +23,10 @@ module Authem::Model
       user = find_by_email(email)
       user if user && user.crypted_password_matches?(password)
     end
+  end
+
+  def authem_token!
+    update_attribute(:authem_token, Authem::Token.generate)
   end
 
   def crypted_password_matches?(password)

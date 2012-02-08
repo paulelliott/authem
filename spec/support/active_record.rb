@@ -21,6 +21,7 @@ class TestMigration < ActiveRecord::Migration
       t.column :email, :string
       t.column :crypted_password, :string
       t.column :salt, :string
+      t.column :authem_token, :string
       t.column :reset_password_token, :string
     end
   end

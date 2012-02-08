@@ -10,6 +10,7 @@ describe Authem::ControllerSupport do
   let(:request) { mock(:request) }
 
   before do
+    user.authem_token!
     controller.stub(:cookies).and_return(cookies)
     controller.stub(:session).and_return(session)
     controller.stub(:request).and_return(request)
@@ -19,25 +20,25 @@ describe Authem::ControllerSupport do
     context 'with an email and password' do
       before { controller.send(:sign_in, 'some@guy.com', 'password') }
       its(:current_user) { should == user }
-      it { session[:user_id].should == user.id }
+      it { session[:authem_token].should == user.reload.authem_token }
     end
 
     context 'with a user model' do
       before { controller.send(:sign_in, user) }
       its(:current_user) { should == user }
-      it { session[:user_id].should == user.id }
+      it { session[:authem_token].should == user.authem_token }
     end
 
     context 'without a password' do
       before { controller.send(:sign_in, 'some@guy.com') }
       its(:current_user) { should be_nil }
-      it { session[:user_id].should be_nil }
+      it { session[:authem_token].should be_nil }
     end
 
     context 'remember me' do
       subject { cookies[:remember_me] }
       before { controller.send(:sign_in, 'some@guy.com', 'password', true) }
-      it { should == user.id }
+      it { should == user.reload.authem_token }
     end
   end
 
@@ -55,8 +56,8 @@ describe Authem::ControllerSupport do
       it { should be_nil }
     end
 
-    context 'with a user id in the session' do
-      before { session[:user_id] = user.id }
+    context 'with a token in the session' do
+      before { session[:authem_token] = user.authem_token }
       it { should == user }
     end
 
@@ -66,11 +67,11 @@ describe Authem::ControllerSupport do
     end
 
     context 'with a remember me token' do
-      before { cookies[:remember_me] = user.id }
+      before { cookies[:remember_me] = user.authem_token }
       it { should == user }
-      it 'sets the session user id' do
+      it 'sets the session token' do
         subject
-        session[:user_id].should == user.id
+        session[:authem_token].should == user.reload.authem_token
       end
     end
 
