@@ -1,5 +1,4 @@
 require 'spec_helper'
-
 describe Authem::ControllerSupport do
   subject { controller }
 
@@ -78,6 +77,21 @@ describe Authem::ControllerSupport do
     context 'with an invalid remember me token' do
       before { cookies[:remember_me] = 945 }
       it { should be_nil }
+    end
+  end
+
+  describe '#signed_in?' do
+    subject { controller.send(:signed_in?) }
+    before { controller.stub(:current_user).and_return(current_user) }
+
+    context 'when the user is signed in' do
+      let(:current_user) { mock }
+      it { should be_true }
+    end
+
+    context 'when the user is not signed in' do
+      let(:current_user) { nil }
+      it { should be_false }
     end
   end
 
