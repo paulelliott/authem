@@ -69,6 +69,7 @@ In your application controller:
 Which gives you access to
 
 * `current_user`
+* `signed_in?`
 * `require_user`
 * `sign_in`
 * `sign_out`
