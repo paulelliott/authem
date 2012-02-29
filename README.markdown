@@ -116,3 +116,4 @@ Pull requests are welcome; please provide spec coverage for new code.
 * mattonrails
 * narwen
 * mattpolito
+* knwang
