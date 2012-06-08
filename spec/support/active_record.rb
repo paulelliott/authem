@@ -22,10 +22,18 @@ class TestMigration < ActiveRecord::Migration
       t.column :authem_token, :string
       t.column :reset_password_token, :string
     end
+
+    create_table :primary_strategy_users, :force => true do |t|
+      t.column :email, :string
+      t.column :password_digest, :string
+      t.column :remember_token, :string
+      t.column :reset_password_token, :string
+    end
   end
 
   def self.down
     drop_table :active_record_users
+    drop_table :primary_strategy_users
   end
 end
 
@@ -35,4 +43,8 @@ end
 
 class ActiveRecordUser < ActiveRecord::Base
   include Authem::Model
+end
+
+class PrimaryStrategyUser < ActiveRecord::Base
+  include Authem::User
 end

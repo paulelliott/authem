@@ -1,4 +1,6 @@
 module Authem
+  autoload :User, 'authem/user'
+
   autoload :Config, 'authem/config'
   autoload :ControllerSupport, 'authem/controller_support'
   autoload :Model, 'authem/model'
