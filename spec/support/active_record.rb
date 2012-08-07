@@ -15,11 +15,11 @@ ActiveRecord::Base.establish_connection(dbconfig)
 
 class TestMigration < ActiveRecord::Migration
   def self.up
-    create_table :active_record_users, :force => true do |t|
+    create_table :sorcery_strategy_users, :force => true do |t|
       t.column :email, :string
       t.column :crypted_password, :string
       t.column :salt, :string
-      t.column :authem_token, :string
+      t.column :remember_token, :string
       t.column :reset_password_token, :string
     end
 
@@ -32,7 +32,7 @@ class TestMigration < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :active_record_users
+    drop_table :sorcery_strategy_users
     drop_table :primary_strategy_users
   end
 end
@@ -41,7 +41,7 @@ RSpec.configure do |config|
   config.before(:suite) { TestMigration.up }
 end
 
-class ActiveRecordUser < ActiveRecord::Base
+class SorceryStrategyUser < ActiveRecord::Base
   include Authem::SorceryUser
 end
 
