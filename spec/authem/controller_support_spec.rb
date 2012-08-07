@@ -2,14 +2,13 @@ require 'spec_helper'
 describe Authem::ControllerSupport do
   subject { controller }
 
-  let!(:user) { ActiveRecordUser.create(:email => 'some@guy.com', :password => 'password') }
+  let!(:user) { PrimaryStrategyUser.create(:email => 'some@guy.com', :password => 'password') }
   let(:controller) { AuthenticatedController.new }
   let(:cookies) { MockCookies.new }
   let(:session) { {}.with_indifferent_access }
   let(:request) { mock(:request) }
 
   before do
-    user.authem_token!
     controller.stub(:cookies).and_return(cookies)
     controller.stub(:session).and_return(session)
     controller.stub(:request).and_return(request)
@@ -19,25 +18,25 @@ describe Authem::ControllerSupport do
     context 'with an email and password' do
       before { controller.send(:sign_in, 'some@guy.com', 'password') }
       its(:current_user) { should == user }
-      it { session[:authem_token].should == user.reload.authem_token }
+      it { session[:remember_token].should == user.reload.remember_token }
     end
 
     context 'with a user model' do
       before { controller.send(:sign_in, user) }
       its(:current_user) { should == user }
-      it { session[:authem_token].should == user.authem_token }
+      it { session[:remember_token].should == user.remember_token }
     end
 
     context 'without a password' do
       before { controller.send(:sign_in, 'some@guy.com') }
       its(:current_user) { should be_nil }
-      it { session[:authem_token].should be_nil }
+      it { session[:remember_token].should be_nil }
     end
 
     context 'remember me' do
       subject { cookies[:remember_me] }
       before { controller.send(:sign_in, 'some@guy.com', 'password', true) }
-      it { should == user.reload.authem_token }
+      it { should == user.reload.remember_token }
     end
   end
 
@@ -57,7 +56,7 @@ describe Authem::ControllerSupport do
     end
 
     context 'with a token in the session' do
-      before { session[:authem_token] = user.authem_token }
+      before { session[:remember_token] = user.remember_token }
       it { should == user }
     end
 
@@ -67,11 +66,11 @@ describe Authem::ControllerSupport do
     end
 
     context 'with a remember me token' do
-      before { cookies[:remember_me] = user.authem_token }
+      before { cookies[:remember_me] = user.remember_token }
       it { should == user }
       it 'sets the session token' do
         subject
-        session[:authem_token].should == user.reload.authem_token
+        session[:remember_token].should == user.reload.remember_token
       end
     end
 

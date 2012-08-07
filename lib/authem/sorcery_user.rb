@@ -4,8 +4,6 @@ module Authem::SorceryUser
   extend ::ActiveSupport::Concern
 
   included do
-    Authem::Config.user_class = self
-
     attr_accessor :password, :password_confirmation
 
     attr_protected :crypted_password, :salt, :reset_password_token, :authem_token

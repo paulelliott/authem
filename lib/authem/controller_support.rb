@@ -4,8 +4,9 @@ module Authem::ControllerSupport
   protected
 
   def sign_in(email_or_user, password=nil, remember_me=false)
-    unless email_or_user.is_a? Authem::SorceryUser
-      email_or_user = Authem::Config.user_class.authenticate(email_or_user, password)
+    if email_or_user.is_a? String
+      user = Authem::Config.user_class.find_by_email(email_or_user)
+      email_or_user = user.authenticate(password) ? user : nil
     end
     if email_or_user
       establish_presence(email_or_user)
@@ -19,15 +20,15 @@ module Authem::ControllerSupport
   end
 
   def remember_me!
-    cookies.permanent.signed[:remember_me] = current_user.authem_token
+    cookies.permanent.signed[:remember_me] = current_user.remember_token
   end
 
   def current_user
     @current_user ||= (
-      if session[:authem_token]
-        Authem::Config.user_class.where(authem_token: session[:authem_token]).first
+      if session[:remember_token]
+        Authem::Config.user_class.where(remember_token: session[:remember_token]).first
       elsif cookies[:remember_me].present?
-        user = Authem::Config.user_class.where(authem_token: cookies.signed[:remember_me].to_s).first
+        user = Authem::Config.user_class.where(remember_token: cookies.signed[:remember_me].to_s).first
         establish_presence(user) if user
       end
     )
@@ -45,11 +46,10 @@ module Authem::ControllerSupport
   end
 
   def establish_presence(user)
-    user.authem_token!
     return_to_url = session[:return_to_url]
     clear_session
     session[:return_to_url] = return_to_url
-    session[:authem_token] = user.authem_token
+    session[:remember_token] = user.remember_token
     @current_user = user
   end
 
