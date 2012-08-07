@@ -42,7 +42,7 @@ RSpec.configure do |config|
 end
 
 class ActiveRecordUser < ActiveRecord::Base
-  include Authem::Model
+  include Authem::SorceryUser
 end
 
 class PrimaryStrategyUser < ActiveRecord::Base

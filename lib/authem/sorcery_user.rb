@@ -1,6 +1,6 @@
 require 'bcrypt'
 
-module Authem::Model
+module Authem::SorceryUser
   extend ::ActiveSupport::Concern
 
   included do

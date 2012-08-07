@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Authem::Model do
+describe Authem::SorceryUser do
   let!(:user) { ActiveRecordUser.create(:email => 'someone@example.com', :password => 'password') }
 
   describe 'validations' do
