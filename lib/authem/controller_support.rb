@@ -62,6 +62,7 @@ module Authem::ControllerSupport
   def clear_session
     cookies[:remember_me] = nil
     reset_session
+    @current_user = nil
   end
 
   included do

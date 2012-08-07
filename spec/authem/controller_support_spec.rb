@@ -45,6 +45,7 @@ describe Authem::ControllerSupport do
     it 'resets the session' do
       controller.should_receive(:clear_session)
       controller.send(:sign_out)
+      controller.send(:current_user).should be_nil
     end
   end
 
