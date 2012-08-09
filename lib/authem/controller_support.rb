@@ -35,6 +35,10 @@ module Authem::ControllerSupport
     end
   end
 
+  def signed_in?
+    current_user.present?
+  end
+
   def redirect_back_or_to(url, flash_hash = {})
     url = session[:return_to_url] || url
     session[:return_to_url] = nil

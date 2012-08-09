@@ -104,6 +104,18 @@ describe Authem::ControllerSupport do
     end
   end
 
+  describe '#signed_in?' do
+    subject { controller.send(:signed_in?) }
+    context 'with an established user' do
+      before { controller.send(:sign_in, user) }
+      it { should be_true }
+    end
+
+    context 'without an established user' do
+      it { should be_false }
+    end
+  end
+
   describe '#redirect_back_or_to' do
     context 'with a return_to_url' do
       before { session[:return_to_url] = :dashboard }
