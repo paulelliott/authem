@@ -21,6 +21,7 @@ class TestMigration < ActiveRecord::Migration
       t.column :salt, :string
       t.column :remember_token, :string
       t.column :reset_password_token, :string
+      t.column :session_token, :string
     end
 
     create_table :primary_strategy_users, :force => true do |t|
@@ -28,6 +29,7 @@ class TestMigration < ActiveRecord::Migration
       t.column :password_digest, :string
       t.column :remember_token, :string
       t.column :reset_password_token, :string
+      t.column :session_token, :string
     end
   end
 

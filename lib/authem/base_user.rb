@@ -17,6 +17,10 @@ module Authem::BaseUser
       self[:remember_token] || generate_token(:remember)
     end
 
+    def session_token
+      self[:session_token] || generate_token(:session)
+    end
+
     def reset_password(password, confirmation)
       return false unless password.present?
 

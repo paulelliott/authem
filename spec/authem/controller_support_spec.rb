@@ -15,34 +15,18 @@ describe Authem::ControllerSupport do
   end
 
   describe '#sign_in' do
-    context 'with an email and password' do
-      before { controller.send(:sign_in, 'some@guy.com', 'password') }
-      its(:current_user) { should == user }
-      it { session[:remember_token].should == user.reload.remember_token }
-    end
-
     context 'with a user model' do
       before { controller.send(:sign_in, user) }
       its(:current_user) { should == user }
-      it { session[:remember_token].should == user.remember_token }
-    end
-
-    context 'without a password' do
-      before { controller.send(:sign_in, 'some@guy.com') }
-      its(:current_user) { should be_nil }
-      it { session[:remember_token].should be_nil }
-    end
-
-    context 'remember me' do
-      subject { cookies[:remember_me] }
-      before { controller.send(:sign_in, 'some@guy.com', 'password', true) }
-      it { should == user.reload.remember_token }
+      it { session[:session_token].should == user.session_token }
+      it { cookies[:remember_token].should == user.remember_token }
     end
   end
 
   describe '#sign_out' do
     it 'resets the session' do
-      controller.should_receive(:clear_session)
+      cookies.should_receive(:[]=).with(:remember_token, nil)
+      controller.should_receive(:reset_session)
       controller.send(:sign_out)
       controller.send(:current_user).should be_nil
     end
@@ -56,26 +40,26 @@ describe Authem::ControllerSupport do
     end
 
     context 'with a token in the session' do
-      before { session[:remember_token] = user.remember_token }
+      before { session[:session_token] = user.session_token }
       it { should == user }
     end
 
     context 'without a remember me token' do
-      before { cookies[:remember_me] = "" }
+      before { cookies[:remember_token] = "" }
       it { should be_nil }
     end
 
     context 'with a remember me token' do
-      before { cookies[:remember_me] = user.remember_token }
+      before { cookies[:remember_token] = user.remember_token }
       it { should == user }
       it 'sets the session token' do
         subject
-        session[:remember_token].should == user.reload.remember_token
+        session[:session_token].should == user.reload.session_token
       end
     end
 
     context 'with an invalid remember me token' do
-      before { cookies[:remember_me] = 945 }
+      before { cookies[:remember_token] = 945 }
       it { should be_nil }
     end
   end
