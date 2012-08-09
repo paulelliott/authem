@@ -37,7 +37,7 @@ module Authem::BaseUser
     private
 
     def generate_token(type)
-      Authem::Token.generate.tap { |token| update_attribute("#{type}_token", token) }
+      Authem::Token.generate.tap { |token| update_column("#{type}_token", token) }
     end
   end
 end
