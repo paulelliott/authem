@@ -15,11 +15,18 @@ describe Authem::ControllerSupport do
   end
 
   describe '#sign_in' do
-    context 'with a user model' do
+    context 'with remember me on' do
       before { controller.send(:sign_in, user) }
       its(:current_user) { should == user }
       it { session[:session_token].should == user.session_token }
       it { cookies[:remember_token].should == user.remember_token }
+    end
+
+    context 'with remember me off' do
+      before { controller.send(:sign_in, user, false) }
+      its(:current_user) { should == user }
+      it { session[:session_token].should == user.session_token }
+      it { cookies[:remember_token].should be_nil }
     end
   end
 

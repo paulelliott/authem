@@ -3,8 +3,8 @@ module Authem::ControllerSupport
 
   protected
 
-  def sign_in(user)
-    cookies.permanent.signed[:remember_token] = user.remember_token
+  def sign_in(user, remember_me=true)
+    cookies.permanent.signed[:remember_token] = user.remember_token if remember_me
     session[:session_token] = user.session_token
   end
 
