@@ -47,6 +47,7 @@ module Authem::ControllerSupport
 
   included do
     helper_method :current_user
+    helper_method :signed_in?
   end
 
 end
