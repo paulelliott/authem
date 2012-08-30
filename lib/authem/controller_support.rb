@@ -24,10 +24,6 @@ module Authem::ControllerSupport
     end
   end
 
-  def signed_in?
-    !!current_user
-  end
-
   def require_user
     unless current_user
       session[:return_to_url] = request.url
@@ -47,6 +43,7 @@ module Authem::ControllerSupport
 
   included do
     helper_method :current_user
+    helper_method :signed_in?
   end
 
 end
