@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    authem (1.0.0.rc1)
+    authem (1.0.0.rc2)
       activesupport
       bcrypt-ruby
 
