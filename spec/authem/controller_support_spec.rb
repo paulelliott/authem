@@ -96,10 +96,39 @@ describe Authem::ControllerSupport do
     end
 
     context 'without an established user' do
+      let(:url) { mock(:url) }
+
       it 'issues a redirect' do
-        request.should_receive(:url)
+        request.stub(:url).and_return(url)
+        url.stub(:xhr?).and_return(false)
         controller.should_receive(:redirect_to).with(:sign_in)
         controller.send(:require_user)
+      end
+
+      context 'return to url' do
+        subject { session[:return_to_url] }
+
+        before do
+          controller.stub(:redirect_to)
+          controller.stub(:current_user).and_return(nil)
+          request.stub(:url).and_return(url)
+        end
+
+        context 'on an http request' do
+          before do
+            url.stub(:xhr?).and_return(false)
+            controller.send(:require_user)
+          end
+          it { should == url }
+        end
+
+        context 'on an xhr request' do
+          before do
+            url.stub(:xhr?).and_return(true)
+            controller.send(:require_user)
+          end
+          it { should be_nil }
+        end
       end
     end
   end
