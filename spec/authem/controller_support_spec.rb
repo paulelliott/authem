@@ -100,7 +100,7 @@ describe Authem::ControllerSupport do
 
       it 'issues a redirect' do
         request.stub(:url).and_return(url)
-        url.stub(:xhr?).and_return(false)
+        request.stub(:xhr?).and_return(false)
         controller.should_receive(:redirect_to).with(:sign_in)
         controller.send(:require_user)
       end
@@ -116,7 +116,7 @@ describe Authem::ControllerSupport do
 
         context 'on an http request' do
           before do
-            url.stub(:xhr?).and_return(false)
+            request.stub(:xhr?).and_return(false)
             controller.send(:require_user)
           end
           it { should == url }
@@ -124,7 +124,7 @@ describe Authem::ControllerSupport do
 
         context 'on an xhr request' do
           before do
-            url.stub(:xhr?).and_return(true)
+            request.stub(:xhr?).and_return(true)
             controller.send(:require_user)
           end
           it { should be_nil }
