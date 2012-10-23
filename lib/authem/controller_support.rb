@@ -15,7 +15,7 @@ module Authem::ControllerSupport
   end
 
   def current_user
-    if session[:session_token]
+    @current_user ||= if session[:session_token]
       Authem::Config.user_class.where(session_token: session[:session_token].to_s).first
     elsif cookies[:remember_token].present?
       Authem::Config.user_class.where(remember_token: cookies.signed[:remember_token].to_s).first.tap do |user|
