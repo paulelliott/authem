@@ -29,10 +29,18 @@ module Authem::BaseUser
   def reset_password(password, confirmation)
     return false unless password.present?
 
+    reset_password_token = self.reset_password_token
+
     self.password = password
     self.password_confirmation = confirmation
     self.reset_password_token = nil
-    save
+
+    if save
+      true
+    else
+      self.reset_password_token = reset_password_token
+      false
+    end
   end
 
   def reset_password_token!
