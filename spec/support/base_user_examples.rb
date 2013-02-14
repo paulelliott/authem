@@ -78,6 +78,7 @@ shared_examples 'base user' do
     end
 
     context 'with non-matching confirmation' do
+      before { user.reset_password_token! }
       before { subject }
       let(:password) { 'password' }
       let(:confirmation) { 'wrong' }
@@ -85,9 +86,13 @@ shared_examples 'base user' do
       it 'should have an error on password' do
         user.errors.should include(:password)
       end
+      it 'leaves reset password token intact' do
+        user.reset_password_token.should_not be_nil
+      end
     end
 
     context 'with matching confirmation' do
+      before { user.reset_password_token! }
       before { subject }
       let(:password) { 'password' }
       it { should be_true }
