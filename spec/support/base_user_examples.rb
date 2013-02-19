@@ -73,8 +73,10 @@ shared_examples 'base user' do
     let(:confirmation) { password }
 
     context 'with a blank password' do
+      before { subject }
       let(:password) { '   ' }
       it { should be_false }
+      it { user.errors.should include(:password)}
     end
 
     context 'with non-matching confirmation' do
