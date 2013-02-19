@@ -9,7 +9,7 @@ module Authem::BaseUser
     validates_uniqueness_of :email
     validates_format_of :email, with: /^\S+@\S+$/
     validates_presence_of :password, on: :create
-    validates_confirmation_of :password, message: 'should match confirmation'
+    validates_confirmation_of :password
   end
 
   module ClassMethods
