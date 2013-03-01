@@ -6,7 +6,7 @@ PATH
       bcrypt-ruby
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     actionpack (3.2.12)
       activemodel (= 3.2.12)
