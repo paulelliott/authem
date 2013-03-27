@@ -5,7 +5,7 @@ module Authem::BaseUser
 
   included do
     validates_uniqueness_of :email
-    validates_format_of :email, with: /^\S+@\S+$/
+    validates_format_of :email, with: /\A\S+@\S+\z/
     validates_presence_of :password, on: :create
     validates_confirmation_of :password
   end
