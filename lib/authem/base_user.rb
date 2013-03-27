@@ -4,8 +4,6 @@ module Authem::BaseUser
   extend ::ActiveSupport::Concern
 
   included do
-    attr_accessible :email, :password, :password_confirmation
-
     validates_uniqueness_of :email
     validates_format_of :email, with: /^\S+@\S+$/
     validates_presence_of :password, on: :create
