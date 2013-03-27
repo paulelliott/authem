@@ -86,7 +86,7 @@ shared_examples 'base user' do
       let(:confirmation) { 'wrong' }
       it { should be_false }
       it 'should have an error on password' do
-        user.errors.should include(:password)
+        user.errors.should include(:password_confirmation)
       end
       it 'leaves reset password token intact' do
         user.reset_password_token.should_not be_nil
