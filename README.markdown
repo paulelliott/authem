@@ -15,10 +15,6 @@ Add the following to your project's Gemfile:
 
     gem 'authem'
 
-Or for Rails 4:
-
-    gem 'authem', github: 'paulelliott/authem', branch: 'rails4'
-
 ## Usage
 
 ### Model Setup
