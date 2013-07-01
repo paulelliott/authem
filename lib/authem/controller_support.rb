@@ -25,7 +25,7 @@ module Authem::ControllerSupport
   end
 
   def require_user
-    unless current_user
+    unless signed_in?
       session[:return_to_url] = request.url unless request.xhr?
       redirect_to Authem::Config.sign_in_path
     end
