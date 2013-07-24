@@ -1,5 +1,3 @@
-require 'bcrypt'
-
 module Authem::BaseUser
   extend ::ActiveSupport::Concern
 
