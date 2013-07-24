@@ -3,7 +3,7 @@ PATH
   specs:
     authem (1.1.0)
       activesupport (~> 4.0.0.rc1)
-      bcrypt-ruby
+      bcrypt-ruby (~> 3.0.0)
 
 GEM
   remote: https://rubygems.org/
