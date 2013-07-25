@@ -6,7 +6,7 @@ describe Authem::ControllerSupport do
   let(:controller) { AuthenticatedController.new }
   let(:cookies) { MockCookies.new }
   let(:session) { {}.with_indifferent_access }
-  let(:request) { mock(:request) }
+  let(:request) { double(:request) }
 
   before do
     controller.stub(:cookies).and_return(cookies)
@@ -76,7 +76,7 @@ describe Authem::ControllerSupport do
     before { controller.stub(:current_user).and_return(current_user) }
 
     context 'when the user is signed in' do
-      let(:current_user) { mock }
+      let(:current_user) { double }
       it { should be_true }
     end
 
@@ -96,7 +96,7 @@ describe Authem::ControllerSupport do
     end
 
     context 'without an established user' do
-      let(:url) { mock(:url) }
+      let(:url) { double(:url) }
 
       it 'issues a redirect' do
         request.stub(:url).and_return(url)
