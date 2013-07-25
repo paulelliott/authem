@@ -10,7 +10,7 @@ module Authem::BaseUser
 
   module ClassMethods
     def find_by_email(email)
-      where("LOWER(email) = ?", email.downcase).first
+      find_by("lower(email) = ?", email.downcase)
     end
   end
 
