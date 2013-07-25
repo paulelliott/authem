@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Authem::SorceryUser do
   let(:user_class) { SorceryStrategyUser }
-  let!(:user) { SorceryStrategyUser.create(email: 'someone@example.com', password: 'password') }
+  let!(:user) { SorceryStrategyUser.create(email: 'someone@example.com', password: 'password', password_confirmation: 'password') }
 
   it_should_behave_like 'base user'
 

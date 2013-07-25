@@ -2,7 +2,7 @@ require 'spec_helper'
 describe Authem::ControllerSupport do
   subject { controller }
 
-  let!(:user) { PrimaryStrategyUser.create(:email => 'some@guy.com', :password => 'password') }
+  let!(:user) { PrimaryStrategyUser.create(:email => 'some@guy.com', :password => 'password', password_confirmation: 'password') }
   let(:controller) { AuthenticatedController.new }
   let(:cookies) { MockCookies.new }
   let(:session) { {}.with_indifferent_access }
