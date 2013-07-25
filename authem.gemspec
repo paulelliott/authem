@@ -7,6 +7,7 @@ require 'authem/version'
 Gem::Specification.new do |s|
   s.name = "authem"
   s.version = Authem::VERSION
+  s.license = "WTFPL"
 
   s.authors = ["Paul Elliott"]
   s.description = "Authem provides a simple solution for email-based authentication."
