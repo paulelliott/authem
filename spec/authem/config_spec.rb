@@ -20,4 +20,18 @@ describe Authem::Config do
       Authem::Config.sign_in_path = :sign_in
     end
   end
+
+  describe '.user_class' do
+    subject { described_class.user_class }
+    before { described_class.user_class = user_class }
+    context 'as a class' do
+      let(:user_class) { PrimaryStrategyUser }
+      it { should == PrimaryStrategyUser }
+    end
+
+    context 'as a string' do
+      let(:user_class) { 'PrimaryStrategyUser' }
+      it { should == PrimaryStrategyUser }
+    end
+  end
 end
