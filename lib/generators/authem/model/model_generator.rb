@@ -6,7 +6,7 @@ module Authem
     argument :model_name, type: :string, default: "user"
 
     def generate_model
-      generate("model #{model_name} email:string, password_digest:string, reset_password_token:string, session_token:string, remember_token:string")
+      generate("model #{model_name} email:string password_digest:string reset_password_token:string session_token:string remember_token:string")
     end
 
     def update_model_to_include_authem
