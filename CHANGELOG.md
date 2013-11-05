@@ -1,3 +1,7 @@
+### 1.3.1 ###
+
+* Bump bcrypt dependency for Rails 4.0.1 compatibility
+
 ### 1.3.0 ###
 
 * Check for presence of password in authenticate
