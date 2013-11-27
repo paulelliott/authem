@@ -1,3 +1,7 @@
+### 1.3.2 ###
+
+* Prevent duplicate password validations on Authem::User
+
 ### 1.3.1 ###
 
 * Bump bcrypt dependency for Rails 4.0.1 compatibility
