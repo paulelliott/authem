@@ -31,9 +31,13 @@ describe Authem::ControllerSupport do
   end
 
   describe '#sign_out' do
+    before { controller.instance_variable_set(:@current_user, double) }
+
     it 'resets the session' do
       cookies.should_receive(:[]=).with(:remember_token, nil)
+      session.should_receive(:[]=).with(:session_token, nil)
       controller.should_receive(:reset_session)
+      controller.send(:current_user).should_receive(:reset_session_token!)
       controller.send(:sign_out)
       controller.send(:current_user).should be_nil
     end
