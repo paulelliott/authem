@@ -1,3 +1,7 @@
+### 1.3.3 ###
+
+* Regenerate session token when user signs out (Issue #21)
+
 ### 1.3.2 ###
 
 * Prevent duplicate password validations on Authem::User
