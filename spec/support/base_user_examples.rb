@@ -120,4 +120,16 @@ shared_examples 'base user' do
     end
   end
 
+  describe '#reset_session_token!' do
+    subject { user.reset_session_token! }
+
+    it 'generates a token when requested' do
+      subject.length.should == 40
+    end
+
+    it 'regenerates when requested again' do
+      subject.should_not == user.reset_session_token!
+    end
+  end
+
 end

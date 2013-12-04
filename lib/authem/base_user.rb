@@ -44,6 +44,10 @@ module Authem::BaseUser
     generate_token(:reset_password)
   end
 
+  def reset_session_token!
+    generate_token(:session)
+  end
+
   private
 
   def generate_token(type)

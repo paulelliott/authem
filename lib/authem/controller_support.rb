@@ -10,7 +10,9 @@ module Authem::ControllerSupport
 
   def sign_out
     cookies[:remember_token] = nil
+    session[:session_token] = nil
     reset_session
+    current_user.reset_session_token! if current_user
     @current_user = nil
   end
 
