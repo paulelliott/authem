@@ -1,17 +1,8 @@
 require 'active_record'
 require 'logger'
 
-dbconfig = {
-  :adapter => 'postgresql',
-  :database => 'authem_test',
-  :min_messages => 'warning'
-}
-
 ActiveRecord::Migration.verbose = false
-ActiveRecord::Base.establish_connection(dbconfig.merge('database' => 'postgres', 'schema_search_path' => 'public'))
-ActiveRecord::Base.connection.drop_database dbconfig[:database] rescue nil
-ActiveRecord::Base.connection.create_database(dbconfig[:database])
-ActiveRecord::Base.establish_connection(dbconfig)
+ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
 
 class TestMigration < ActiveRecord::Migration
   def self.up
