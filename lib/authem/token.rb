@@ -1,7 +1,7 @@
+require 'securerandom'
+
 class Authem::Token
-
   def self.generate
-    Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by {rand}.join)
+    SecureRandom.hex(20)
   end
-
 end
