@@ -6,7 +6,7 @@ module Authem
     argument :model_name, type: :string, default: "user"
 
     def generate_model
-      generate("model #{model_name} email:string password_digest:string reset_password_token:string session_token:string remember_token:string")
+      generate "model #{model_name} email:string password_digest:string reset_password_token:string session_token:string remember_token:string"
     end
 
     def update_model_to_include_authem
@@ -15,7 +15,7 @@ module Authem
 
     def add_initializer
       create_file 'config/initializers/authem.rb' do
-        %Q(Authem.configure do |config|\n  config.user_class = #{model_name.camelize}\nend)
+        "Authem.configure do |config|\n  config.user_class = #{model_name.camelize}\nend"
       end
     end
 
