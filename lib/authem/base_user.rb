@@ -22,7 +22,7 @@ module Authem::BaseUser
 
   def reset_password(password, confirmation)
     if password.blank?
-      self.errors.add(:password, :blank)
+      self.errors.add :password, :blank
       return false
     end
 
@@ -32,20 +32,18 @@ module Authem::BaseUser
     self.password_confirmation = confirmation
     self.reset_password_token = nil
 
-    if save
-      true
-    else
-      self.reset_password_token = reset_password_token
-      false
-    end
+    return true if save
+
+    self.reset_password_token = reset_password_token
+    false
   end
 
   def reset_password_token!
-    generate_token(:reset_password)
+    generate_token :reset_password
   end
 
   def reset_session_token!
-    generate_token(:session)
+    generate_token :session
   end
 
   private
