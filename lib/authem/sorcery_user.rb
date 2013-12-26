@@ -5,8 +5,8 @@ module Authem::SorceryUser
   included do
     attr_accessor :password, :password_confirmation
     validates_presence_of :password, on: :create
-    validates_presence_of :password_confirmation, if: ->(user) { user.password.present? }
-    validates_confirmation_of :password, if: ->(user) { user.password.present? }
+    validates_presence_of :password_confirmation, if: ->{ password.present? }
+    validates_confirmation_of :password, if: ->{ password.present? }
 
     before_save :encrypt_password
   end
