@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.summary = "Authem authenticates them by email"
 
   s.files = Dir.glob("{lib,spec}/**/*") + %w(README.markdown)
+  s.required_ruby_version = '>= 1.9.3'
 
   s.add_dependency 'activesupport', '~> 4.0.1'
   s.add_dependency 'bcrypt-ruby', '~> 3.1.0'
