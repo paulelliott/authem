@@ -1,3 +1,10 @@
+### 1.4.0 ###
+
+* Use SecureRandom for token generation
+* Lots of support file cleanup
+* Some code cleanup
+* All of this is thanks to Pavel Pravosud (@rwz). This guy is fantastic.
+
 ### 1.3.3 ###
 
 * Regenerate session token when user signs out (Issue #21)
