@@ -1,7 +1,7 @@
-require 'securerandom'
-
-class Authem::Token
-  def self.generate
-    SecureRandom.hex(20)
+module Authem
+  class Token
+    def self.generate
+      SecureRandom.urlsafe_base64(45)
+    end
   end
 end

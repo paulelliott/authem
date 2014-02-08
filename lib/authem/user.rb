@@ -1,21 +1,32 @@
-module Authem::User
-  extend ::ActiveSupport::Concern
-  include Authem::BaseUser
+require "authem/token"
 
-  included do
-    Authem::Config.user_class = self
+module Authem
+  module User
+    extend ActiveSupport::Concern
 
-    has_secure_password
+    included do
+      has_many :authem_sessions, as: :subject, class_name: "Authem::Session"
+      has_secure_password
 
-    alias_method :original_authenticate, :authenticate
+      validates :email, uniqueness: true, format: /\A\S+@\S+\z/
 
-    def authenticate(password)
-      if password.present?
-        original_authenticate(password)
-      else
-        false
+      before_create{ self.password_reset_token = Authem::Token.generate }
+    end
+
+    def email=(value)
+      super value.try(:downcase)
+    end
+
+    def reset_password(password, confirmation)
+      if password.blank?
+        errors.add :password, :blank
+        return false
       end
+
+      self.password = password
+      self.password_confirmation = confirmation
+
+      update_column :password_reset_token, Authem::Token.generate if save
     end
   end
-
 end

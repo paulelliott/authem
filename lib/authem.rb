@@ -1,12 +1,6 @@
-module Authem
-  autoload :BaseUser,          'authem/base_user'
-  autoload :User,              'authem/user'
-  autoload :SorceryUser,       'authem/sorcery_user'
-  autoload :Config,            'authem/config'
-  autoload :ControllerSupport, 'authem/controller_support'
-  autoload :Token,             'authem/token'
+require "authem/railtie"
+require "authem/user"
+require "authem/version"
 
-  def self.configure(&block)
-    Config.configure(&block)
-  end
+module Authem
 end

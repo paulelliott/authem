@@ -1,34 +1,23 @@
-# -*- encoding: utf-8 -*-
-lib = File.expand_path('../lib/', __FILE__)
-$:.unshift lib unless $:.include?(lib)
-
+# coding: utf-8
+lib = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'authem/version'
 
-Gem::Specification.new do |s|
-  s.name = "authem"
-  s.version = Authem::VERSION
-  s.license = "WTFPL"
+Gem::Specification.new do |spec|
+  spec.name          = "authem"
+  spec.version       = Authem::VERSION
+  spec.authors       = ["Paul Elliott", "Pavel Pravosud"]
+  spec.email         = ["paul@hashrocket.com", "pavel@pravosud.com"]
+  spec.summary       = "Authem authenticates them by email"
+  spec.description   = "Authem provides a simple solution for email-based authentication"
+  spec.homepage      = "https://github.com/paulelliott/authem"
+  spec.license       = "MIT"
 
-  s.authors = ["Paul Elliott"]
-  s.description = "Authem provides a simple solution for email-based authentication."
-  s.email = ["paul@hashrocket.com"]
-  s.homepage = "https://github.com/paulelliott/authem"
-  s.summary = "Authem authenticates them by email"
+  spec.files         = `git ls-files`.split($/)
+  spec.test_files    = spec.files.grep("spec")
+  spec.require_path  = "lib"
 
-  s.files = Dir.glob("{lib,spec}/**/*") + %w(README.markdown)
-  s.required_ruby_version = '>= 1.9.3'
-
-  s.add_dependency 'activesupport', '~> 4.0.1'
-  s.add_dependency 'bcrypt-ruby', '~> 3.1.0'
-
-  s.add_development_dependency 'actionpack', '~> 4.0'
-  s.add_development_dependency 'activerecord', '~> 4.0'
-  s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'pry'
-
-  s.files = Dir.glob("lib/**/*") + %w(LICENSE README.markdown Rakefile)
-  s.require_path = 'lib'
+  spec.add_dependency "activesupport",  "~> 4.0"
+  spec.add_dependency "railties",       "~> 4.0"
+  spec.add_dependency "bcrypt-ruby",    "~> 3.1"
 end

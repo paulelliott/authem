@@ -1,3 +1,11 @@
+### 2.0.0 ###
+
+* Complete rewrite from scratch
+* Store sessions in the database
+* Multiple sessions and models support
+* Drop Sorcery support
+* Initializer is no longer needed
+
 ### 1.4.0 ###
 
 * Use SecureRandom for token generation

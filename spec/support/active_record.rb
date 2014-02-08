@@ -1,43 +1,45 @@
-require 'active_record'
-require 'logger'
+require "active_record"
 
 ActiveRecord::Migration.verbose = false
-ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
 
-class TestMigration < ActiveRecord::Migration
-  def self.up
-    create_table :sorcery_strategy_users, :force => true do |t|
-      t.column :email, :string
-      t.column :crypted_password, :string
-      t.column :salt, :string
-      t.column :remember_token, :string
-      t.column :reset_password_token, :string
-      t.column :session_token, :string
-    end
+ActiveRecord::Base.establish_connection(
+  adapter:  "sqlite3",
+  database: ":memory:"
+)
 
-    create_table :primary_strategy_users, :force => true do |t|
-      t.column :email, :string
-      t.column :password_digest, :string
-      t.column :remember_token, :string
-      t.column :reset_password_token, :string
-      t.column :session_token, :string
+class CreateUsersMigration < ActiveRecord::Migration
+  def up
+    create_table :users do |t|
+      t.string :email
+      t.string :password_digest
+      t.string :password_reset_token
     end
   end
+end
 
-  def self.down
-    drop_table :sorcery_strategy_users
-    drop_table :primary_strategy_users
+class CreateSessionsMigration < ActiveRecord::Migration
+  def up
+    create_table :authem_sessions do |t|
+      t.string     :role,       null: false
+      t.references :subject,    null: false, polymorphic: true
+      t.string     :token,      null: false
+      t.datetime   :expires_at, null: false
+      t.integer    :ttl,        null: false
+      t.timestamps
+    end
   end
 end
 
 RSpec.configure do |config|
-  config.before(:suite) { TestMigration.up }
-end
+  config.before :suite do
+    CreateUsersMigration.new.up
+    CreateSessionsMigration.new.up
+  end
 
-class SorceryStrategyUser < ActiveRecord::Base
-  include Authem::SorceryUser
-end
-
-class PrimaryStrategyUser < ActiveRecord::Base
-  include Authem::User
+  config.around do |example|
+    ActiveRecord::Base.transaction do
+      example.run
+      raise ActiveRecord::Rollback
+    end
+  end
 end
