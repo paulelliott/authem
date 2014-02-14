@@ -116,6 +116,10 @@ describe Authem::Controller do
       expect(controller.send(:user_sign_in_path)).to eq(:root)
     end
 
+    it "has redirect_back_or_to method" do
+      expect(controller).to respond_to(:redirect_back_or_to)
+    end
+
     it "can clear all sessions using clear_all_sessions method" do
       expect(controller).to receive(:clear_all_user_sessions_for).with(user)
       controller.clear_all_sessions_for user
@@ -375,5 +379,29 @@ describe Authem::Controller do
       message = "Ambigous match for #{user.inspect}: user, customer"
       expect{ controller.sign_out user }.to raise_error(Authem::AmbigousRoleError, message)
     end
+  end
+
+  context "redirect after authentication" do
+    let(:controller_klass){ Class.new(BaseController){ authem_for :user }}
+
+    context "with saved url" do
+      before{ session[:return_to_url] = :my_url }
+
+      it "redirects back to saved url if it's available" do
+        expect(controller).to receive(:redirect_to).with(:my_url, notice: "foo")
+        controller.redirect_back_or_to :root, notice: "foo"
+      end
+
+      it "removes values from session after successful redirect" do
+        expect(controller).to receive(:redirect_to).with(:my_url, {})
+        expect{ controller.redirect_back_or_to :root }.to change{ session[:return_to_url] }.from(:my_url).to(nil)
+      end
+    end
+
+    it "redirects to specified url if there is no saved value" do
+      expect(controller).to receive(:redirect_to).with(:root, notice: "foo")
+      controller.redirect_back_or_to :root, notice: "foo"
+    end
+
   end
 end

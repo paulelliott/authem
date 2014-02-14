@@ -22,6 +22,11 @@ module Authem
         role = options.fetch(:as){ self.class.authem_role_for(model) }
         public_send "clear_all_#{role}_sessions_for", model
       end
+
+      def redirect_back_or_to(url, **options)
+        url = session.delete(:return_to_url) || url
+        redirect_to url, options
+      end
     end
 
     module ClassMethods
