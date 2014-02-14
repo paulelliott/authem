@@ -28,6 +28,10 @@ module Authem
       auth_session
     end
 
+    def signed_in?
+      current.present?
+    end
+
     def sign_out
       ivar_set nil
       Authem::Session.where(role: role_name, token: current_auth_token).delete_all
@@ -39,6 +43,13 @@ module Authem
       check_record! record
       sign_out
       Authem::Session.by_subject(record).where(role: role_name).delete_all
+    end
+
+    def require
+      unless signed_in?
+        session[:return_to_url] = request.url unless request.xhr?
+        redirect_to sign_in_path
+      end
     end
 
     private
@@ -102,12 +113,15 @@ module Authem
       @ivar_name ||= "@_#{key}".to_sym
     end
 
-    def cookies
-      controller.send(:cookies)
+    def sign_in_path
+      controller.send("#{role_name}_sign_in_path")
     end
 
-    def session
-      controller.send(:session)
+    # exposing private controller methods
+    %i[cookies session redirect_to request].each do |method_name|
+      define_method method_name do |*args|
+        controller.send(method_name, *args)
+      end
     end
   end
 end

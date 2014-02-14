@@ -18,6 +18,10 @@ describe Authem::Controller do
       session.clear
     end
 
+    def request
+      double("Request").stub(url: request_url)
+    end
+
     def reloaded
       self.class.new.tap do |controller|
         controller.stub(
@@ -65,15 +69,16 @@ describe Authem::Controller do
     controller_klass.new
   end
 
-  let(:controller){ build_controller }
+  let(:controller){ build_controller.tap{ |c| c.stub(request: request) }}
   let(:cookies){ controller.send(:cookies) }
+  let(:session){ controller.send(:session) }
   let(:reloaded_controller){ controller.reloaded }
+  let(:request_url){ "http://example.com/foo" }
+  let(:request){ double("Request").tap{ |r| r.stub(url: request_url, xhr?: false) }}
 
   context "with one role" do
     let(:user){ User.create(email: "joe@example.com") }
-    let(:controller_klass) do
-      Class.new(BaseController){ authem_for :user }
-    end
+    let(:controller_klass){ Class.new(BaseController){ authem_for :user }}
 
     it "has current_user method" do
       expect(controller).to respond_to(:current_user)
@@ -85,6 +90,19 @@ describe Authem::Controller do
 
     it "has clear_all_user_sessions_for method" do
       expect(controller).to respond_to(:clear_all_user_sessions_for)
+    end
+
+    it "has require_user method" do
+      expect(controller).to respond_to(:require_user)
+    end
+
+    it "has user_signed_in? method" do
+      expect(controller).to respond_to(:user_signed_in?)
+    end
+
+    it "has user_sign_in_path method with default value" do
+      expect(controller).to respond_to(:user_sign_in_path)
+      expect(controller.send(:user_sign_in_path)).to eq(:root)
     end
 
     it "can clear all sessions using clear_all_sessions method" do
@@ -103,8 +121,19 @@ describe Authem::Controller do
       expect(reloaded_controller.current_user).to eq(user)
     end
 
+    it "can show status of current session with user_signed_in? method" do
+      expect{ controller.sign_in user }.to change(controller, :user_signed_in?).from(false).to(true)
+      expect{ controller.sign_out user }.to change(controller, :user_signed_in?).from(true).to(false)
+    end
+
     it "can store session token in a cookie when :remember option is used" do
       expect{ controller.sign_in user, remember: true }.to change(cookies, :size).by(1)
+    end
+
+    it "can require authemticated user with require_user method" do
+      controller.stub(user_sign_in_path: :custom_path)
+      expect(controller).to receive(:redirect_to).with(:custom_path)
+      expect{ controller.require_user }.to change{ session[:return_to_url] }.from(nil).to(request_url)
     end
 
     it "sets cookie expiration date when :remember options is used" do
