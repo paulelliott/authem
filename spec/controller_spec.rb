@@ -402,6 +402,14 @@ describe Authem::Controller do
       expect(controller).to receive(:redirect_to).with(:root, notice: "foo")
       controller.redirect_back_or_to :root, notice: "foo"
     end
+  end
 
+  context "when defining authem" do
+    it "settings do not propagate to parent controller" do
+      parent_klass = Class.new(BaseController){ authem_for :user }
+      child_klass = Class.new(parent_klass){ authem_for :member }
+      expect(child_klass.authem_roles).to have(2).roles
+      expect(parent_klass.authem_roles).to have(1).role
+    end
   end
 end

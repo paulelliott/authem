@@ -30,7 +30,7 @@ module Authem
 
     def setup_controller_settings
       controller.authem_roles ||= []
-      controller.authem_roles.push self
+      controller.authem_roles += [self]
     end
 
     def setup_controller_instance_methods
