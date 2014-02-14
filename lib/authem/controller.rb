@@ -35,8 +35,8 @@ module Authem
 
         matches = authem_roles.select{ |role| record.class == role.klass }
 
-        fail UnknownRoleError, record if matches.empty?
-        fail AmbigousRoleError, record => matches unless matches.one?
+        fail UnknownRoleError.build(record) if matches.empty?
+        fail AmbigousRoleError.build(record, matches) unless matches.one?
 
         matches.first.name
       end

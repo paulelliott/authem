@@ -1,10 +1,8 @@
 module Authem
   class AmbigousRoleError < StandardError
-    def initialize(options)
-      record = options.keys.first
-      matches = options[record].map(&:role_name)
-      message = "Ambigous match for #{record.inspect}: #{matches * ', '}"
-      super message
+    def self.build(record, roles)
+      role_names = roles.map(&:name) * ", "
+      new("Ambigous match for #{record.inspect}: #{role_names}")
     end
   end
 end
