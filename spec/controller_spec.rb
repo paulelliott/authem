@@ -146,7 +146,7 @@ describe Authem::Controller do
       expect{ controller.sign_in user, remember: true }.to change(cookies, :size).by(1)
     end
 
-    it "can require authemticated user with require_user method" do
+    it "can require authenticated user with require_user method" do
       controller.stub(user_sign_in_path: :custom_path)
       expect(controller).to receive(:redirect_to).with(:custom_path)
       expect{ controller.require_user }.to change{ session[:return_to_url] }.from(nil).to(request_url)
