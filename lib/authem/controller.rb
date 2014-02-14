@@ -38,7 +38,7 @@ module Authem
         fail UnknownRoleError, record if matches.empty?
         fail AmbigousRoleError, record => matches unless matches.one?
 
-        matches.first.role_name
+        matches.first.name
       end
     end
   end

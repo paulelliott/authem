@@ -54,7 +54,7 @@ module Authem
 
     private
 
-    delegate :role_name, to: :role
+    delegate :name, to: :role, prefix: true
 
     def check_record!(record)
       fail ArgumentError if record.nil?

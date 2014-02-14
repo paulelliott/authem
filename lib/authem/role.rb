@@ -2,7 +2,7 @@ require "authem/support"
 
 module Authem
   class Role
-    attr_reader :controller, :role_name, :options
+    attr_reader :controller, :name, :options
 
     METHODS = %i[current sign_in signed_in? require sign_out clear_for]
 
@@ -12,12 +12,12 @@ module Authem
       end
     end
 
-    def initialize(controller, role_name, **options)
-      @controller, @role_name, @options = controller, role_name.to_s, options
+    def initialize(controller, name, **options)
+      @controller, @name, @options = controller, name.to_s, options
     end
 
     def klass
-      @klass ||= options.fetch(:model){ role_name.classify.constantize }
+      @klass ||= options.fetch(:model){ name.classify.constantize }
     end
 
     def setup!
@@ -33,28 +33,27 @@ module Authem
     end
 
     def setup_controller_instance_methods
-      authem_role = self
-      mapping = method_mapping
-      name = role_name
+      role = self
 
-      controller.instance_eval do
-        mapping.each do |inner_method, exposed_method|
-          define_method exposed_method do |*args|
-            authem_role.public_send(inner_method, self, *args)
-          end
-        end
-
-        define_method "#{name}_sign_in_path" do
-          :root
+      method_mapping.each do |inner_method, exposed_method|
+        define_controller_method exposed_method do |*args|
+          role.public_send(inner_method, self, *args)
         end
       end
 
+      define_controller_method "#{role.name}_sign_in_path" do
+        :root
+      end
+    end
+
+    def define_controller_method(*args, &block)
+      controller.instance_eval{ define_method *args, &block }
     end
 
     def method_mapping
-      exposed_methods = %I[current_#{role_name} sign_in_#{role_name}
-        #{role_name}_signed_in? require_#{role_name} sign_out_#{role_name}
-        clear_all_#{role_name}_sessions_for]
+      exposed_methods = %I[current_#{name} sign_in_#{name}
+        #{name}_signed_in? require_#{name} sign_out_#{name}
+        clear_all_#{name}_sessions_for]
 
       Hash[[METHODS, exposed_methods].transpose]
     end
