@@ -23,6 +23,7 @@ module Authem
     def setup!
       setup_controller_settings
       setup_controller_instance_methods
+      setup_view_helpers
     end
 
     private
@@ -44,6 +45,10 @@ module Authem
       define_controller_method "#{role.name}_sign_in_path" do
         :root
       end
+    end
+
+    def setup_view_helpers
+      controller.helper_method *%I[current_#{name} #{name}_signed_in?]
     end
 
     def define_controller_method(*args, &block)

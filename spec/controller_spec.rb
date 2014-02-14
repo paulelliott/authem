@@ -14,6 +14,16 @@ describe Authem::Controller do
   class BaseController
     include Authem::Controller
 
+    class << self
+      def helper_methods_list
+        @helper_methods_list ||= []
+      end
+
+      def helper_method(*methods)
+        helper_methods_list.concat methods
+      end
+    end
+
     def clear_session!
       session.clear
     end
@@ -70,6 +80,7 @@ describe Authem::Controller do
   end
 
   let(:controller){ build_controller.tap{ |c| c.stub(request: request) }}
+  let(:view_helpers){ controller_klass.helper_methods_list }
   let(:cookies){ controller.send(:cookies) }
   let(:session){ controller.send(:session) }
   let(:reloaded_controller){ controller.reloaded }
@@ -108,6 +119,11 @@ describe Authem::Controller do
     it "can clear all sessions using clear_all_sessions method" do
       expect(controller).to receive(:clear_all_user_sessions_for).with(user)
       controller.clear_all_sessions_for user
+    end
+
+    it "defines view helpers" do
+      expect(view_helpers).to include(:current_user)
+      expect(view_helpers).to include(:user_signed_in?)
     end
 
     it "raises error when calling clear_all_sessions_for with nil" do
