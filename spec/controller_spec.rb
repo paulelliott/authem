@@ -128,6 +128,7 @@ describe Authem::Controller do
     it "defines view helpers" do
       expect(view_helpers).to include(:current_user)
       expect(view_helpers).to include(:user_signed_in?)
+      expect(view_helpers).to include(:user_sign_in_path)
     end
 
     it "raises error when calling clear_all_sessions_for with nil" do

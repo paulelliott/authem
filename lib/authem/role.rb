@@ -48,7 +48,7 @@ module Authem
     end
 
     def setup_view_helpers
-      controller.helper_method *%I[current_#{name} #{name}_signed_in?]
+      controller.helper_method *%I[current_#{name} #{name}_signed_in? #{name}_sign_in_path]
     end
 
     def define_controller_method(*args, &block)
