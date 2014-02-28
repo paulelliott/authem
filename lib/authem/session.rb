@@ -35,7 +35,7 @@ module Authem
     private
 
     def ttl_from_now
-      ttl.to_i.from_now
+      ttl.to_i.seconds.from_now
     end
   end
 end
