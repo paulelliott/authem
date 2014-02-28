@@ -8,7 +8,10 @@ module Authem
       has_many :authem_sessions, as: :subject, class_name: "Authem::Session"
       has_secure_password
 
-      validates :email, uniqueness: true, format: /\A\S+@\S+\z/
+      validates :email,
+        uniqueness: true,
+        presence: true,
+        format: { with: /\A\S+@\S+\z/, allow_blank: true }
 
       before_create{ self.password_reset_token = Authem::Token.generate }
     end
