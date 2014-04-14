@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "authem"
   spec.version       = Authem::VERSION
   spec.authors       = ["Paul Elliott", "Pavel Pravosud"]
-  spec.email         = ["paul@hashrocket.com", "pavel@pravosud.com"]
+  spec.email         = ["paul@codingfrontier.com", "pavel@pravosud.com"]
   spec.summary       = "Authem authenticates them by email"
   spec.description   = "Authem provides a simple solution for email-based authentication"
   spec.homepage      = "https://github.com/paulelliott/authem"
