@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep("spec")
   spec.require_path  = "lib"
 
-  spec.add_dependency "activesupport",  "~> 4.0"
+  spec.add_dependency "activesupport",  ">= 4.0.4"
   spec.add_dependency "railties",       "~> 4.0"
-  spec.add_dependency "bcrypt-ruby",    "~> 3.1"
+  spec.add_dependency "bcrypt",         "~> 3.1"
 end
