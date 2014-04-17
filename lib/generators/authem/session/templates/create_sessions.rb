@@ -10,6 +10,6 @@ class CreateAuthemSessions < ActiveRecord::Migration
     end
 
     add_index :authem_sessions, %i[expires_at token], unique: true
-    add_index :authem_sessions, %i[expires_at subject_type subject_id]
+    add_index :authem_sessions, %i[expires_at subject_type subject_id], name: 'index_authem_sessions_subject'
   end
 end
