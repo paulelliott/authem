@@ -1,9 +1,8 @@
-require "rails/generators/base"
-require "rails/generators/active_record/migration"
+require "rails/generators/active_record"
 
 module Authem
-  class SessionGenerator < Rails::Generators::Base
-    include ActiveRecord::Generators::Migration
+  class SessionGenerator < ActiveRecord::Generators::Base
+    argument :name, type: :string, default: 'unused but required by activerecord'
     source_root File.expand_path("../templates", __FILE__)
 
     def copy_session_migration
