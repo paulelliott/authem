@@ -8,8 +8,6 @@ module Authem
       has_many :authem_sessions, as: :subject, class_name: "Authem::Session"
       has_secure_password
 
-      alias_attribute :password_reset_token, :reset_password_token
-
       validates :email,
         uniqueness: true,
         presence: true,
