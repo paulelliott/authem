@@ -1,10 +1,8 @@
 source 'https://rubygems.org'
 
-gemspec
+gem 'appraisal'
 
 group :test do
-  gem "activerecord",  ">= 4.0.4"
-  gem "actionpack",    ">= 4.0.4"
   gem "rspec"
   gem "rake"
   gem "sqlite3"
