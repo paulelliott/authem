@@ -17,6 +17,7 @@ Please see the Authem website for up-to-date documentation: http://authem.org
 
 ## Upgrading to 2.0
 
+- Specify the latest alpha release in your Gemfile: `gem 'authem', '1.0.0.alpha.3'`
 - Remove references to the old Authem::Config object.
 - Create the new sessions table with `rails s authem:session`.
 - Replace `include Authem::ControllerSupport` with `authem_for :user`.
