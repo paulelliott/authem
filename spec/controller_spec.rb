@@ -28,10 +28,6 @@ describe Authem::Controller do
       session.clear
     end
 
-    def request
-      double("Request").stub(url: request_url)
-    end
-
     def reloaded
       self.class.new.tap do |controller|
         controller.stub(
