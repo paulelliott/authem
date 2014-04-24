@@ -63,9 +63,10 @@ module Authem
     def fetch_subject_by_token
       return if current_auth_token.blank?
       auth_session = get_auth_session_by_token(current_auth_token)
-      auth_session && auth_session.refresh
+      return nil unless auth_session
+      auth_session.refresh
       save_cookie auth_session if cookies.signed[key].present?
-      auth_session && auth_session.subject
+      auth_session.subject
     end
 
     def current_auth_token
