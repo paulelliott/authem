@@ -7,7 +7,7 @@ require 'authem/version'
 Gem::Specification.new do |s|
   s.name = "authem"
   s.version = Authem::VERSION
-  s.license = "WTFPL"
+  s.license = "MIT"
 
   s.authors = ["Paul Elliott"]
   s.description = "Authem provides a simple solution for email-based authentication."
@@ -18,8 +18,9 @@ Gem::Specification.new do |s|
   s.files = Dir.glob("{lib,spec}/**/*") + %w(README.markdown)
   s.required_ruby_version = '>= 1.9.3'
 
-  s.add_dependency 'activesupport', '~> 4.0.1'
-  s.add_dependency 'bcrypt-ruby', '~> 3.1.0'
+  s.add_dependency "activesupport",  ">= 4.0.4"
+  s.add_dependency "railties",       ">= 4.0"
+  s.add_dependency "bcrypt",         ">= 3.1"
 
   s.add_development_dependency 'actionpack', '~> 4.0'
   s.add_development_dependency 'activerecord', '~> 4.0'

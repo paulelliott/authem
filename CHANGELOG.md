@@ -1,3 +1,7 @@
+### 1.5.0 ###
+
+* Update dependencies to work with Rails 4.0.4 or greater
+
 ### 1.4.0 ###
 
 * Use SecureRandom for token generation
