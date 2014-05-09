@@ -198,7 +198,7 @@ describe Authem::Controller do
       expect(cookies.expires_at).to be_within(1.second).of(30.days.from_now)
     end
 
-    it "can sing in using sign_in method" do
+    it "can sign in using sign_in method" do
       expect(controller).to receive(:sign_in_user).with(user, {})
       controller.sign_in user
     end
@@ -307,7 +307,7 @@ describe Authem::Controller do
       expect(reloaded_controller.current_admin).to eq(admin)
     end
 
-    it "can sign in using sing_in method" do
+    it "can sign in using sign_in method" do
       expect(controller).to receive(:sign_in_admin).with(admin, {})
       controller.sign_in admin
     end
