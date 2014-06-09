@@ -30,11 +30,11 @@ describe Authem::User do
     end
 
     it "returns false if password is incorrect" do
-      expect(user.authenticate("notright")).to be_false
+      expect(user.authenticate("notright")).to be_falsy
     end
 
     it "returns false if password is nil" do
-      expect(user.authenticate(nil)).to be_false
+      expect(user.authenticate(nil)).to be_falsy
     end
   end
 
@@ -68,11 +68,11 @@ describe Authem::User do
     end
 
     it "returns true if when password change is successful" do
-      expect(user.reset_password("123", "123")).to be_true
+      expect(user.reset_password("123", "123")).to be_truthy
     end
 
     it "returns false when confirmation does not match" do
-      expect(user.reset_password("123", "321")).to be_false
+      expect(user.reset_password("123", "321")).to be_falsy
     end
 
     it "adds an error when confirmation does not match" do
@@ -86,7 +86,7 @@ describe Authem::User do
     end
 
     it "returns false when password is blank" do
-      expect(user.reset_password("", "")).to be_false
+      expect(user.reset_password("", "")).to be_falsy
     end
   end
 

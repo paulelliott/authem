@@ -9,8 +9,8 @@ gem "railties", "~> 4.0"
 gem "protected_attributes"
 
 group :test do
-  gem "rspec"
-  gem "rake"
+  gem "rspec", "~> 3.0"
+  gem "rake", "~> 10.3"
   gem "sqlite3"
   gem "pry"
 end

@@ -29,11 +29,13 @@ describe Authem::Controller do
     end
 
     def reloaded
+      original_session, original_cookies = session, cookies
+
       self.class.new.tap do |controller|
-        controller.stub(
-          session: session,
-          cookies: cookies
-        )
+        controller.class_eval do
+          define_method(:session){ original_session }
+          define_method(:cookies){ original_cookies }
+        end
       end
     end
 
@@ -75,13 +77,13 @@ describe Authem::Controller do
     controller_klass.new
   end
 
-  let(:controller){ build_controller.tap{ |c| c.stub(request: request) }}
+  let(:controller){ build_controller.tap{ |c| allow(c).to receive(:request){ request }}}
   let(:view_helpers){ controller_klass.helper_methods_list }
   let(:cookies){ controller.send(:cookies) }
   let(:session){ controller.send(:session) }
   let(:reloaded_controller){ controller.reloaded }
   let(:request_url){ "http://example.com/foo" }
-  let(:request){ double("Request").tap{ |r| r.stub(url: request_url, xhr?: false) }}
+  let(:request){ double("Request", url: request_url, xhr?: false) }
 
   context "with one role" do
     let(:user){ User.create(email: "joe@example.com") }
@@ -404,8 +406,8 @@ describe Authem::Controller do
     it "settings do not propagate to parent controller" do
       parent_klass = Class.new(BaseController){ authem_for :user }
       child_klass = Class.new(parent_klass){ authem_for :member }
-      expect(child_klass.authem_roles).to have(2).roles
-      expect(parent_klass.authem_roles).to have(1).role
+      expect(child_klass.authem_roles.size).to eq(2)
+      expect(parent_klass.authem_roles.size).to eq(1)
     end
   end
 end
