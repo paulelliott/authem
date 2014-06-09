@@ -1,17 +1,13 @@
-require "rails/generators/base"
+require "rails/generators/active_record/model/model_generator"
 
 module Authem
-  class UserGenerator < Rails::Generators::Base
-    argument :model_name, type: :string, default: "user"
+  class UserGenerator < ActiveRecord::Generators::ModelGenerator
+    source_root File.expand_path("../templates", __FILE__)
 
-    def generate_model
-      generate "model #{model_name} email:string password_digest:string password_reset_token:string"
-    end
+    private
 
-    def update_model_to_include_authem
-      insert_into_file "app/models/#{model_name}.rb",
-        "  include Authem::User\n\n",
-        after: "class #{model_name.classify} < ActiveRecord::Base\n"
+    def migration_template(_, migration_file_name)
+      super "create_table_migration.rb", migration_file_name
     end
   end
 end
