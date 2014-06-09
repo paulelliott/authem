@@ -4,7 +4,7 @@ module Authem
   class Role
     attr_reader :controller, :name, :options
 
-    METHODS = %i[current sign_in signed_in? require sign_out clear_for]
+    METHODS = %i[current sign_in signed_in? require sign_out clear_for deny_access]
 
     METHODS.each do |method_name|
       define_method method_name do |controller, *args|
@@ -41,14 +41,10 @@ module Authem
           role.public_send(inner_method, self, *args)
         end
       end
-
-      define_controller_method "#{role.name}_sign_in_path" do
-        :root
-      end
     end
 
     def setup_view_helpers
-      controller.helper_method *%I[current_#{name} #{name}_signed_in? #{name}_sign_in_path]
+      controller.helper_method *%I[current_#{name} #{name}_signed_in?]
     end
 
     def define_controller_method(*args, &block)
@@ -58,7 +54,7 @@ module Authem
     def method_mapping
       exposed_methods = %I[current_#{name} sign_in_#{name}
         #{name}_signed_in? require_#{name} sign_out_#{name}
-        clear_all_#{name}_sessions_for]
+        clear_all_#{name}_sessions_for deny_#{name}_access]
 
       Hash[[METHODS, exposed_methods].transpose]
     end

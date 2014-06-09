@@ -48,8 +48,13 @@ module Authem
     def require
       unless signed_in?
         session[:return_to_url] = request.url unless request.xhr?
-        redirect_to sign_in_path
+        controller.send "deny_#{role_name}_access"
       end
+    end
+
+    def deny_access
+      # default landing point for deny_#{role_name}_access
+      fail NotImplementedError, "No strategy for require_#{role_name} defined. Please define `deny_#{role_name}_access` method in your controller"
     end
 
     private
@@ -112,10 +117,6 @@ module Authem
 
     def ivar_name
       @ivar_name ||= "@_#{key}".to_sym
-    end
-
-    def sign_in_path
-      controller.send("#{role_name}_sign_in_path")
     end
 
     # exposing private controller methods

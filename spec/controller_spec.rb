@@ -107,11 +107,6 @@ describe Authem::Controller do
       expect(controller).to respond_to(:user_signed_in?)
     end
 
-    it "has user_sign_in_path method with default value" do
-      expect(controller).to respond_to(:user_sign_in_path)
-      expect(controller.send(:user_sign_in_path)).to eq(:root)
-    end
-
     it "has redirect_back_or_to method" do
       expect(controller).to respond_to(:redirect_back_or_to)
     end
@@ -124,7 +119,6 @@ describe Authem::Controller do
     it "defines view helpers" do
       expect(view_helpers).to include(:current_user)
       expect(view_helpers).to include(:user_signed_in?)
-      expect(view_helpers).to include(:user_sign_in_path)
     end
 
     it "raises error when calling clear_all_sessions_for with nil" do
@@ -147,8 +141,13 @@ describe Authem::Controller do
       expect{ controller.sign_in user, remember: true }.to change(cookies, :size).by(1)
     end
 
+    it "throws NotImplementedError when require strategy is not defined" do
+      message = "No strategy for require_user defined. Please define `deny_user_access` method in your controller"
+      expect{ controller.require_user }.to raise_error(NotImplementedError, message)
+    end
+
     it "can require authenticated user with require_user method" do
-      controller.stub(user_sign_in_path: :custom_path)
+      def controller.deny_user_access; redirect_to :custom_path; end
       expect(controller).to receive(:redirect_to).with(:custom_path)
       expect{ controller.require_user }.to change{ session[:return_to_url] }.from(nil).to(request_url)
     end
