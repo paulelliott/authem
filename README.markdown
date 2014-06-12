@@ -28,3 +28,9 @@ Please see the Authem website for up-to-date documentation: http://authem.org
 - If you were passing a remember flag as the second argument to `sign_in`, you need to provide an options hash instead. For example, `sign_in(user, params[:remember])` would become `sign_in(user, remember: params[:remember])`.
 - Blank email addresses will now produce the proper "can't be blank" validation message". Update your tests accordingly.
 - Email addresses are no longer automatically downcased when calling `find_by_email` on your model. You will need to downcase the value manually if you wish to retain this behavior.
+- Specify what to do when authem denies access to a user by adding something like this to your ApplicationController.
+```
+def deny_user_access
+  redirect_to :sign_in
+end
+```
