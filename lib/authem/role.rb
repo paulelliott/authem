@@ -4,7 +4,7 @@ module Authem
   class Role
     attr_reader :controller, :name, :options
 
-    METHODS = %i[current sign_in signed_in? require sign_out clear_for deny_access]
+    METHODS = %w[current sign_in signed_in? require sign_out clear_for deny_access].map(&:to_sym)
 
     METHODS.each do |method_name|
       define_method method_name do |controller, *args|
@@ -12,7 +12,7 @@ module Authem
       end
     end
 
-    def initialize(controller, name, **options)
+    def initialize(controller, name, options={})
       @controller, @name, @options = controller, name.to_s, options
     end
 
@@ -44,7 +44,7 @@ module Authem
     end
 
     def setup_view_helpers
-      controller.helper_method *%I[current_#{name} #{name}_signed_in?]
+      controller.helper_method *%W[current_#{name} #{name}_signed_in?].map(&:to_sym)
     end
 
     def define_controller_method(*args, &block)
@@ -52,9 +52,9 @@ module Authem
     end
 
     def method_mapping
-      exposed_methods = %I[current_#{name} sign_in_#{name}
+      exposed_methods = %W[current_#{name} sign_in_#{name}
         #{name}_signed_in? require_#{name} sign_out_#{name}
-        clear_all_#{name}_sessions_for deny_#{name}_access]
+        clear_all_#{name}_sessions_for deny_#{name}_access].map(&:to_sym)
 
       Hash[[METHODS, exposed_methods].transpose]
     end

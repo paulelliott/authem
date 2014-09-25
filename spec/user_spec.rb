@@ -7,11 +7,12 @@ describe Authem::User do
     include Authem::User
 
 
-    def self.create(email: "joe@example.com", password: "password")
+    def self.create(opts={})
+      opts = {email: "joe@example.com", password: "password"}.merge(opts)
       super(
-        email:                 email,
-        password:              password,
-        password_confirmation: password
+        email:                 opts[:email],
+        password:              opts[:password],
+        password_confirmation: opts[:password]
       )
     end
   end

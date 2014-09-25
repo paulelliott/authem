@@ -19,7 +19,7 @@ module Authem
       end
     end
 
-    def sign_in(record, **options)
+    def sign_in(record, options={})
       check_record! record
       ivar_set record
       auth_session = create_auth_session(record, options)
@@ -120,7 +120,7 @@ module Authem
     end
 
     # exposing private controller methods
-    %i[cookies session redirect_to request].each do |method_name|
+    %w[cookies session redirect_to request].each do |method_name|
       define_method method_name do |*args|
         controller.send(method_name, *args)
       end
