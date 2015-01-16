@@ -4,7 +4,7 @@ module Authem
   class Role
     attr_reader :controller, :name, :options
 
-    METHODS = %w[current sign_in signed_in? require sign_out clear_for deny_access].map(&:to_sym)
+    METHODS = %w[current sign_in signed_in? require_role sign_out clear_for deny_access].map(&:to_sym)
 
     METHODS.each do |method_name|
       define_method method_name do |controller, *args|

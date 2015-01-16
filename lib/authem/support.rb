@@ -45,7 +45,7 @@ module Authem
       Authem::Session.by_subject(record).where(role: role_name).delete_all
     end
 
-    def require
+    def require_role
       unless signed_in?
         session[:return_to_url] = request.url unless request.xhr?
         controller.send "deny_#{role_name}_access"
