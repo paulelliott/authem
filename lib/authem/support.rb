@@ -15,7 +15,7 @@ module Authem
       if ivar_defined?
         ivar_get
       else
-        ivar_set fetch_subject_by_token
+        ivar_set(fetch_subject_by_token)
       end
     end
 
@@ -87,12 +87,11 @@ module Authem
     end
 
     def save_cookie(auth_session)
-      cookie_value = {
+      cookies.signed[key] = {
         value:   auth_session.token,
         expires: auth_session.expires_at,
         domain:  :all
       }
-      cookies.signed[key] = cookie_value
     end
 
     def get_auth_session_by_token(token)
