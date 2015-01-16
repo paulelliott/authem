@@ -6,7 +6,7 @@ Authem is an email-based authentication library for ruby web apps.
 
 ## Compatibility
 
-Authem requires Ruby 2.0.0 or newer
+Authem requires Ruby 1.9.3 or newer
 
 [![Build Status](https://secure.travis-ci.org/paulelliott/authem.png)](http://travis-ci.org/paulelliott/authem)
 [![Code Climate](https://codeclimate.com/github/paulelliott/authem.png)](https://codeclimate.com/github/paulelliott/authem)
