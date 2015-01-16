@@ -25,7 +25,7 @@ class CreateSessionsMigration < ActiveRecord::Migration
       t.string     :token,      null: false
       t.datetime   :expires_at, null: false
       t.integer    :ttl,        null: false
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
