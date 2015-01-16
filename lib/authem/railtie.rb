@@ -1,4 +1,3 @@
-require "authem/controller"
 require "rails/railtie"
 
 module Authem

@@ -1,5 +1,4 @@
 require "active_record"
-require "authem/token"
 
 module Authem
   class Session < ::ActiveRecord::Base

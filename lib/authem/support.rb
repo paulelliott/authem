@@ -1,8 +1,3 @@
-require "active_support/core_ext/module/delegation"
-require "authem/session"
-require "authem/errors/ambigous_role"
-require "authem/errors/unknown_role"
-
 module Authem
   class Support
     attr_reader :role, :controller

@@ -1,5 +1,3 @@
-require "authem/support"
-
 module Authem
   class Role
     attr_reader :controller, :name, :options

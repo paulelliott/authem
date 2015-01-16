@@ -1,6 +1,3 @@
-require "active_support/concern"
-require "authem/role"
-
 module Authem
   module Controller
     extend ActiveSupport::Concern

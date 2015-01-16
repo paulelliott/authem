@@ -1,5 +1,3 @@
-require "authem/token"
-
 module Authem
   module User
     extend ActiveSupport::Concern
