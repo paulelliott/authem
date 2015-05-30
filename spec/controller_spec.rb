@@ -46,7 +46,7 @@ describe Authem::Controller do
     private
 
     def session
-      @_session ||= HashWithIndifferentAccess.new _csrf_token: "random_token"
+      @_session ||= { _csrf_token: "random_token" }.with_indifferent_access
     end
 
     def cookies
