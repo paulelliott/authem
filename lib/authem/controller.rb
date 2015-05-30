@@ -7,7 +7,7 @@ module Authem
     module SessionManagementMethods
       def sign_in(model, options={})
         role = options.fetch(:as){ self.class.authem_role_for(model) }
-        session.delete(:_csrf_token) if session.respond_to? :delete
+        session.delete :_csrf_token if session.respond_to?(:delete)
         public_send "sign_in_#{role}", model, options
       end
 
