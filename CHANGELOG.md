@@ -1,3 +1,11 @@
+### 2.0.2 ###
+
+* Signing up resets CSRF token [[PR](https://github.com/paulelliott/authem/pull/27)]
+
+### 2.0.1 ###
+
+* Add JRuby support
+
 ### 2.0.0 ###
 
 * Complete rewrite from scratch
