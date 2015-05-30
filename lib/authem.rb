@@ -1,5 +1,5 @@
-require "authem/railtie"
 require "active_support/all"
+require "authem/railtie"
 
 module Authem
   autoload :Controller,         "authem/controller"
