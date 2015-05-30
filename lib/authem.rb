@@ -1,8 +1,8 @@
+require "authem/railtie"
 require "active_support/all"
 
 module Authem
   autoload :Controller,         "authem/controller"
-  autoload :Railtie,            "authem/railtie"
   autoload :Role,               "authem/role"
   autoload :Session,            "authem/session"
   autoload :Support,            "authem/support"
