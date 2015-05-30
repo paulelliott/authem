@@ -39,10 +39,14 @@ describe Authem::Controller do
       end
     end
 
+    def csrf_token
+      session[:_csrf_token]
+    end
+
     private
 
     def session
-      @_session ||= HashWithIndifferentAccess.new
+      @_session ||= HashWithIndifferentAccess.new _csrf_token: "random_token"
     end
 
     def cookies
@@ -132,6 +136,11 @@ describe Authem::Controller do
       controller.sign_in_user user
       expect(controller.current_user).to eq(user)
       expect(reloaded_controller.current_user).to eq(user)
+    end
+
+    it "reset csrf token after user sign in" do
+      expect{ controller.sign_in user }.to change(controller, :csrf_token)
+      expect(controller.csrf_token).to be_nil
     end
 
     it "can show status of current session with user_signed_in? method" do
