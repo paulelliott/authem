@@ -139,8 +139,7 @@ describe Authem::Controller do
     end
 
     it "reset csrf token after user sign in" do
-      expect{ controller.sign_in user }.to change(controller, :csrf_token)
-      expect(controller.csrf_token).to be_nil
+      expect{ controller.sign_in user }.to change(controller, :csrf_token).to(nil)
     end
 
     it "can show status of current session with user_signed_in? method" do
