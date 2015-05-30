@@ -10,5 +10,4 @@ module Authem
   autoload :User,               "authem/user"
   autoload :AmbigousRoleError,  "authem/errors/ambigous_role"
   autoload :UnknownRoleError,   "authem/errors/unknown_role"
-  autoload :VERSION,            "autoload/version"
 end
