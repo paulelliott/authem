@@ -1,3 +1,9 @@
+appraise "rails-5.0" do
+  gem "activerecord", "~> 5.0.0.beta3", require: "active_record"
+  gem "bcrypt", "~> 3.1"
+  gem "railties", "~> 5.0.0.beta3"
+end
+
 appraise "rails-4.2" do
   gem "activerecord", "~> 4.2.0", require: "active_record"
   gem "bcrypt", "~> 3.1"
