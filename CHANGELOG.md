@@ -1,3 +1,7 @@
+### 2.1.0 ###
+
+* Rails 5 compatibility
+
 ### 2.0.2 ###
 
 * Signing up resets CSRF token [[PR](https://github.com/paulelliott/authem/pull/27)]
